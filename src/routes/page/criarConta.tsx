@@ -21,7 +21,7 @@ function RouteComponent() {
         />
         <h1 className="text-center text-4xl font-bold mb-6">
           {" "}
-          Seja <br /> Bem-vindo {/* vai na feiura msm*/}
+          Seja Bem-vindo
         </h1>
         <div className="flex flex-col gap-8">
           <Field className="gap-1 mt-3">

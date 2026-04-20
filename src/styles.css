@@ -3,7 +3,7 @@
 @plugin '@tailwindcss/typography';
 @import 'tw-animate-css';
 
-@theme {
+@theme{
   --font-rubik: "Rubik", sans-serif;
   --font-lora: "Lora", serif;
 
@@ -17,5 +17,5 @@
   --color-neuro-light-purple: #dab1da;
   --color-neuro-purple: #e873e8;
   --color-neuro-dark-purple: #bb45bb;
-  --color-neuro-light-blue: #acdfff;
+  --color-neuro-light-blue: #c9e4f5;
 }
