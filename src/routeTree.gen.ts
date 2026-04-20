@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PageLoginRouteImport } from './routes/page/login'
+import { Route as PageCriarContaRouteImport } from './routes/page/criarConta'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,30 +23,39 @@ const PageLoginRoute = PageLoginRouteImport.update({
   path: '/page/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PageCriarContaRoute = PageCriarContaRouteImport.update({
+  id: '/page/criarConta',
+  path: '/page/criarConta',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/page/criarConta': typeof PageCriarContaRoute
   '/page/login': typeof PageLoginRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/page/criarConta': typeof PageCriarContaRoute
   '/page/login': typeof PageLoginRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/page/criarConta': typeof PageCriarContaRoute
   '/page/login': typeof PageLoginRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/page/login'
+  fullPaths: '/' | '/page/criarConta' | '/page/login'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/page/login'
-  id: '__root__' | '/' | '/page/login'
+  to: '/' | '/page/criarConta' | '/page/login'
+  id: '__root__' | '/' | '/page/criarConta' | '/page/login'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PageCriarContaRoute: typeof PageCriarContaRoute
   PageLoginRoute: typeof PageLoginRoute
 }
 
@@ -65,11 +75,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PageLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/page/criarConta': {
+      id: '/page/criarConta'
+      path: '/page/criarConta'
+      fullPath: '/page/criarConta'
+      preLoaderRoute: typeof PageCriarContaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PageCriarContaRoute: PageCriarContaRoute,
   PageLoginRoute: PageLoginRoute,
 }
 export const routeTree = rootRouteImport
