@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Button } from "#/components/ui/button";
 import { ClipboardList } from "lucide-react";
+import { TrendingUp } from 'lucide-react'; 
+import pomodoroTimer from "#/assets/icons/pomodorotimer.png";
 import SubpageComponent from "#/components/subpageHomecomponent";
 import Navbar from "#/components/neuroNavbar";
 import CloudImg from "#/assets/icons/cloudimg.png";
@@ -28,7 +30,7 @@ function App() {
           </Button>
         </div>
 
-        <div className="flex items-center justify-between mt-16">
+        <div className="flex items-center justify-between mt-16 gap-16">
           {/*gerenciar tarefas*/}
           <SubpageComponent
             title="Gerencie Tarefas"
@@ -38,6 +40,29 @@ function App() {
             buttontitle="Ver Tarefas >"
             className="bg-neuro-light-green"
             buttonClassName="bg-neuro-dark-green"
+          />
+
+          {/*progresso*/}
+          <SubpageComponent
+            title="Progresso"
+            icon={<TrendingUp />}
+            subtitle="Veja aqui seu desempenho semanal"
+            to=""
+            buttontitle="Ver Progresso >"
+            className="bg-neuro-light-purple"
+            buttonClassName="bg-neuro-dark-purple"
+          />
+
+          {/*pomodoro*/}
+          <SubpageComponent
+            title="Pomodoro"
+            src={pomodoroTimer}
+            alt="pomodoro icon"
+            subtitle="Com essa técnica estude melhor"
+            to=""
+            buttontitle="Focar Agora >"
+            className="bg-neuro-light-red"
+            buttonClassName="bg-neuro-dark-red"
           />
         </div>
       </main>

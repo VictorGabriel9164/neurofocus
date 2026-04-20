@@ -8,6 +8,8 @@ type SubpageProps = {
   subtitle: string;
   buttontitle: string;
   to: string;
+  src?: string;
+  alt?: string;
   icon?: React.ReactNode;
 };
 
@@ -18,6 +20,8 @@ const SubpageComponent = ({
   subtitle,
   buttontitle,
   to,
+  src,
+  alt,
   icon,
 }: SubpageProps) => {
   return (
@@ -28,10 +32,11 @@ const SubpageComponent = ({
           className,
         )}
       >
+        {src && <img src={src} alt={alt ?? ""} className="w-6 scale-380 m-8" />}
         {icon && <div className="scale-250 m-8">{icon}</div>}
         <h1 className="font-bold text-[16px]">{title}</h1>
         <div className="w-4 h-1.5 bg-gray-300 px-20 rounded-4xl mb-2"></div>
-        <h1 className="text-center text-xs">{subtitle}</h1>
+        <h1 className="text-center text-xs mb-4">{subtitle}</h1>
         <Link to={to}>
           <Button
             variant={"outline"}
