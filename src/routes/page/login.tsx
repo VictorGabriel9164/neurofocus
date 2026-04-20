@@ -4,6 +4,7 @@ import { Field, FieldLabel } from "@/components/ui/field";
 import { Button } from "#/components/ui/button";
 import { Link } from "@tanstack/react-router";
 import NeuroFocusIcon from "#/assets/icons/neurofocusicon.png";
+import InputPassword from "#/components/inputPassword";
 export const Route = createFileRoute("/page/login")({
   component: RouteComponent,
 });
@@ -20,10 +21,7 @@ function RouteComponent() {
             <Input className="rounded-3xl border-neuro-light-green focus-visible:border-neuro-dark-green focus-visible:ring-neuro-dark-green mr-32"></Input>
           </Field >
 
-          <Field className="gap-1 mt-3">
-            <FieldLabel className="font-bold">Senha</FieldLabel>
-            <Input className="rounded-3xl border-neuro-light-green focus-visible:border-neuro-dark-green focus-visible:ring-neuro-dark-green mr-32"></Input>
-          </Field>
+          <InputPassword className="border-neuro-light-green focus-visible:border-neuro-dark-green focus-visible:ring-neuro-dark-green" />
         </div>
         <Button
           variant={"outline"}
