@@ -12,9 +12,9 @@ export const Route = createFileRoute("/page/login")({
 function RouteComponent() {
   return (
     <>
-      <main className="flex flex-col items-center justify-center min-h-screen">
-        <img src={NeuroFocusIcon} alt="neuro focus icon" className=" w-[20rem] h-auto rounded-4xl scale-200"/>
-        <h1 className="text-4xl font-bold mb-8">Login</h1>
+      <main className="flex flex-col items-center justify-center min-h-screen font-rubik">
+        <img src={NeuroFocusIcon} alt="neuro focus icon" className=" w-[20rem] h-auto rounded-4xl scale-175"/>
+        <h1 className="text-4xl font-bold mb-6">Login</h1>
         <div className="flex flex-col gap-8">
           <Field className="gap-1 mt-3">
             <FieldLabel className="font-bold">E-mail</FieldLabel>
@@ -25,7 +25,7 @@ function RouteComponent() {
         </div>
         <Button
           variant={"outline"}
-          className="mt-12 bg-neuro-dark-green border-none px-12 rounded-3xl mb-4"
+          className="mt-8 bg-neuro-light-green hover:bg-neuro-dark-green border-none px-12 rounded-3xl mb-4"
         >
           Entrar
         </Button>

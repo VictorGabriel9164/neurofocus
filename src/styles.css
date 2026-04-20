@@ -1,15 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
 
 @import 'tw-animate-css';
 
 @theme {
+  --font-rubik: "Rubik", sans-serif;
   --color-neuro-light-green: #7bd9b8;
   --color-neuro-dark-green: #5e9c87;
   --color-neuro-green: #15f4a2;
   --color-neuro-yellow: #f2c94c;
   --color-neuro-red: #eb5757;
   --color-neuro-orange: #f2a65a;
-  --color-light-red: #e07a7a;
+  --color-neuro-light-red: #e07a7a;
+  --color-neuro-light-purple: #dab1da;
+  --color-neuro-purple: #e873e8;
+  --color-neuro-dark-purple: #bb45bb;
 }
