@@ -4,7 +4,7 @@
 
 @import 'tw-animate-css';
 
-:root {
+@theme {
   --color-neuro-light-green: #7bd9b8;
   --color-neuro-dark-green: #5e9c87;
   --color-neuro-green: #15f4a2;
