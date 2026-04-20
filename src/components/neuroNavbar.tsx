@@ -13,7 +13,7 @@ export default function Navbar() {
 
       <div className="flex items-center gap-6">
         <Link
-          to="/"
+          to="/page/home"
           className="transition hover:text-neuro-green hover:underline"
         >
           Início
