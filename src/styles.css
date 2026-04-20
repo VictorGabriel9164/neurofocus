@@ -4,5 +4,12 @@
 
 @import 'tw-animate-css';
 
-@custom-variant dark (&:is(.dark *));
-
+:root {
+  --color-neuro-light-green: #7bd9b8;
+  --color-neuro-dark-green: #5e9c87;
+  --color-neuro-green: #15f4a2;
+  --color-neuro-yellow: #f2c94c;
+  --color-neuro-red: #eb5757;
+  --color-neuro-orange: #f2a65a;
+  --color-light-red: #e07a7a;
+}
