@@ -23,12 +23,14 @@ function RouteComponent() {
 
           <InputPassword className="border-neuro-light-green focus-visible:border-neuro-dark-green focus-visible:ring-neuro-dark-green" />
         </div>
+        <Link to="/page/home">
         <Button
           variant={"outline"}
           className="mt-8 bg-neuro-light-green hover:bg-neuro-dark-green border-none px-12 rounded-3xl mb-4"
         >
           Entrar
         </Button>
+        </Link>
         <h1> Não tem uma conta?</h1>
         <Link to="/page/criarConta" className="text-neuro-green underline hover:text-neuro-dark-green">
           Criar Conta
