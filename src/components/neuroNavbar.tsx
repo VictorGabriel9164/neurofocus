@@ -34,7 +34,7 @@ export default function Navbar() {
         </Link>
 
         <Link
-        to="/"
+        to="/page/pomodoroPage"
         className="transition hover:text-neuro-green hover:underline"
         >
         Pomodoro

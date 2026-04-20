@@ -59,7 +59,7 @@ function App() {
             src={pomodoroTimer}
             alt="pomodoro icon"
             subtitle="Com essa técnica estude melhor"
-            to=""
+            to="/page/pomodoroPage"
             buttontitle="Focar Agora >"
             className="bg-neuro-light-red"
             buttonClassName="bg-neuro-dark-red"

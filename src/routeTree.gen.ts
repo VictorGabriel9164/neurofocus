@@ -9,10 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as PagePomodoroPageRouteImport } from './routes/page/pomodoroPage'
 import { Route as PageLoginRouteImport } from './routes/page/login'
 import { Route as PageHomeRouteImport } from './routes/page/home'
 import { Route as PageCriarContaRouteImport } from './routes/page/criarConta'
 
+const PagePomodoroPageRoute = PagePomodoroPageRouteImport.update({
+  id: '/page/pomodoroPage',
+  path: '/page/pomodoroPage',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PageLoginRoute = PageLoginRouteImport.update({
   id: '/page/login',
   path: '/page/login',
@@ -33,34 +39,54 @@ export interface FileRoutesByFullPath {
   '/page/criarConta': typeof PageCriarContaRoute
   '/page/home': typeof PageHomeRoute
   '/page/login': typeof PageLoginRoute
+  '/page/pomodoroPage': typeof PagePomodoroPageRoute
 }
 export interface FileRoutesByTo {
   '/page/criarConta': typeof PageCriarContaRoute
   '/page/home': typeof PageHomeRoute
   '/page/login': typeof PageLoginRoute
+  '/page/pomodoroPage': typeof PagePomodoroPageRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/page/criarConta': typeof PageCriarContaRoute
   '/page/home': typeof PageHomeRoute
   '/page/login': typeof PageLoginRoute
+  '/page/pomodoroPage': typeof PagePomodoroPageRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/page/criarConta' | '/page/home' | '/page/login'
+  fullPaths:
+    | '/page/criarConta'
+    | '/page/home'
+    | '/page/login'
+    | '/page/pomodoroPage'
   fileRoutesByTo: FileRoutesByTo
-  to: '/page/criarConta' | '/page/home' | '/page/login'
-  id: '__root__' | '/page/criarConta' | '/page/home' | '/page/login'
+  to: '/page/criarConta' | '/page/home' | '/page/login' | '/page/pomodoroPage'
+  id:
+    | '__root__'
+    | '/page/criarConta'
+    | '/page/home'
+    | '/page/login'
+    | '/page/pomodoroPage'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   PageCriarContaRoute: typeof PageCriarContaRoute
   PageHomeRoute: typeof PageHomeRoute
   PageLoginRoute: typeof PageLoginRoute
+  PagePomodoroPageRoute: typeof PagePomodoroPageRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/page/pomodoroPage': {
+      id: '/page/pomodoroPage'
+      path: '/page/pomodoroPage'
+      fullPath: '/page/pomodoroPage'
+      preLoaderRoute: typeof PagePomodoroPageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/page/login': {
       id: '/page/login'
       path: '/page/login'
@@ -89,6 +115,7 @@ const rootRouteChildren: RootRouteChildren = {
   PageCriarContaRoute: PageCriarContaRoute,
   PageHomeRoute: PageHomeRoute,
   PageLoginRoute: PageLoginRoute,
+  PagePomodoroPageRoute: PagePomodoroPageRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
