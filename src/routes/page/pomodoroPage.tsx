@@ -3,6 +3,7 @@ import { PomodoroProvider } from "#/components/Pomodoro/Context/PomodoroContext"
 import Navbar from "#/components/neuroNavbar";
 import Pomodoro from "#/components/Pomodoro/pomodoro";
 import PomodoroChangeTime from "#/components/Pomodoro/pomodoroChangetime";
+import PomodoroCycle from "#/components/Pomodoro/pomodoroCycle";
 
 
 export const Route = createFileRoute("/page/pomodoroPage")({
@@ -16,18 +17,18 @@ function RouteComponent() {
         <Navbar />
       </header>
 
-      <main className="flex flex-col font-rubik w-full justify-center items-center">
+      <main className="font-rubik w-full">
         <div className="w-full text-left px-12">
-          <h1 className="font-bold text-3xl mt-4">Pomodoro</h1>
+          <h1 className="font-bold text-3xl mt-6">Pomodoro</h1>
           <h1>Concentre-se e estude com foco</h1>
         </div>
 
-        <div className="flex justify-center items-center">
+        <div className="flex items-start gap-12 ml-18 mt-16">
           <Pomodoro />
-        </div>
-
-        <div className="mt-12">
+          <div className="mt-2 space-y-8">
           <PomodoroChangeTime />
+          <PomodoroCycle />
+          </div>
         </div>
       </main>
     </PomodoroProvider>

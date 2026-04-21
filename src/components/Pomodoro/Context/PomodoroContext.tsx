@@ -18,6 +18,8 @@ type PomodoroContextType = {
   changeTime: (newTime: TimeKey) => void;
   setIsRunning: Dispatch<SetStateAction<boolean>>;
   formatTime: () => string;
+  totalStudyTime: number;
+  formatTotalTime: () => string;
 };
 
 const PomodoroContext = createContext({} as PomodoroContextType);
@@ -28,6 +30,7 @@ export function PomodoroProvider({ children }: { children: ReactNode }) {
   const [isRunning, setIsRunning] = useState(false);
   const [state, setState] = useState<"focus" | "break">("focus");
   const [cycles, setCycles] = useState(0);
+  const [totalStudyTime, setTotalStudyTime] = useState(0);
 
   const changeTime = (newTime: TimeKey) => {
     setSelectedTime(newTime);
@@ -43,6 +46,7 @@ export function PomodoroProvider({ children }: { children: ReactNode }) {
       setIsRunning(false);
 
       if (state === "focus") {
+        setTotalStudyTime((prev) => prev + timeOptions[selectedTime]);
         setState("break");
         setTime(5 * 60);
       } else {
@@ -68,11 +72,18 @@ export function PomodoroProvider({ children }: { children: ReactNode }) {
   }, [isRunning, selectedTime, state]);
 
   const formatTime = () => {
-    const mins = Math.floor(time / 60).toString().padStart(2, "0");
+    const mins = Math.floor(time / 60)
+      .toString()
+      .padStart(2, "0");
     const secs = (time % 60).toString().padStart(2, "0");
     return `${mins}:${secs}`;
   };
+  const formatTotalTime = () => {
+    const hours = Math.floor(totalStudyTime / 3600);
+    const minutes = Math.floor((totalStudyTime % 3600) / 60);
 
+    return `${hours}h ${minutes}min`;
+  };
   return (
     <PomodoroContext.Provider
       value={{
@@ -84,6 +95,8 @@ export function PomodoroProvider({ children }: { children: ReactNode }) {
         changeTime,
         setIsRunning,
         formatTime,
+        totalStudyTime,
+        formatTotalTime,
       }}
     >
       {children}
