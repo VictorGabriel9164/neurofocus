@@ -12,3 +12,10 @@ export const createaccountSchema = z.object({
     .string()
     .min(8, { message: "A senha deve conter no mínimo 8 caracteres" }),
 });
+
+export const loginSchema = z.object({
+  email: z.string().email({ message: "Email inválido" }),
+  password: z
+    .string()
+    .min(8, { message: "A senha deve conter no mínimo 8 caracteres" }),
+});
