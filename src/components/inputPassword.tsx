@@ -7,20 +7,41 @@ import { cn } from "#/lib/utils";
 
 type InputPasswordProps = {
   className?: string;
+  id?: string;
+  name?: string;
+  value?: string;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
 };
-const InputPassword = ({ className } : InputPasswordProps) => {
+
+const InputPassword = ({
+  className,
+  id,
+  name,
+  value,
+  onChange,
+  onBlur,
+}: InputPasswordProps) => {
   const [isVisible, setIsVisible] = useState(false);
 
   return (
     <>
       <Field className="gap-1 mt-3">
         <FieldLabel className="font-bold">Senha</FieldLabel>
+
         <div className="relative">
           <Input
+            id={id}
+            name={name}
+            value={value}
+            onChange={onChange}
+            onBlur={onBlur}
             className={cn("rounded-3xl pr-10", className)}
             type={isVisible ? "text" : "password"}
-          ></Input>
+          />
+
           <Button
+            type="button"
             variant="ghost"
             size="icon"
             onClick={() => setIsVisible((prevState) => !prevState)}
