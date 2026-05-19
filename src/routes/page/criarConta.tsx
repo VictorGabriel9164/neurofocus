@@ -1,143 +1,143 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useForm, Controller } from "react-hook-form";
-import type { SubmitHandler } from "react-hook-form";
-import { z } from "zod";
+  import { createFileRoute } from "@tanstack/react-router";
+  import { useForm, Controller } from "react-hook-form";
+  import type { SubmitHandler } from "react-hook-form";
+  import { z } from "zod";
 
-import { Input } from "#/components/ui/input";
-import { Field, FieldLabel } from "@/components/ui/field";
-import { Button } from "#/components/ui/button";
-import { createaccountSchema } from "#/schemas/zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import InputPassword from "#/components/inputPassword";
-import NeuroFocusIcon from "#/assets/icons/neurofocusicon.png";
+  import { Input } from "#/components/ui/input";
+  import { Field, FieldLabel } from "@/components/ui/field";
+  import { Button } from "#/components/ui/button";
+  import { createaccountSchema } from "#/schemas/zod";
+  import { zodResolver } from "@hookform/resolvers/zod";
+  import InputPassword from "#/components/inputPassword";
+  import NeuroFocusIcon from "#/assets/icons/neurofocusicon.png";
 
-export const Route = createFileRoute("/page/criarConta")({
-  component: RouteComponent,
-});
-
-type FormData = z.infer<typeof createaccountSchema>;
-
-function RouteComponent() {
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm<FormData>({
-    defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-    },
-    resolver: zodResolver(createaccountSchema),
+  export const Route = createFileRoute("/page/criarConta")({
+    component: RouteComponent,
   });
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
-    console.log(data);
-    console.log("the form was submitted successfully.");
-  };
+  type FormData = z.infer<typeof createaccountSchema>;
 
-  return (
-    <main className="flex flex-col items-center justify-center min-h-screen font-rubik">
-      <img
-        src={NeuroFocusIcon}
-        alt="neuro focus icon"
-        className="w-[20rem] h-auto rounded-4xl scale-175"
-      />
+  function RouteComponent() {
+    const {
+      handleSubmit,
+      control,
+      formState: { errors },
+    } = useForm<FormData>({
+      defaultValues: {
+        name: "",
+        email: "",
+        password: "",
+      },
+      resolver: zodResolver(createaccountSchema),
+    });
 
-      <h1 className="text-center text-4xl font-bold mb-6">Seja Bem-vindo</h1>
+    const onSubmit: SubmitHandler<FormData> = (data) => {
+      console.log(data);
+      console.log("the form was submitted successfully.");
+    };
 
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8">
-        <Controller
-          name="name"
-          control={control}
-          render={({ field, fieldState }) => (
-            <Field
-              orientation="vertical"
-              data-invalid={fieldState.invalid}
-              className="gap-1 mt-3"
-            >
-              <FieldLabel htmlFor={field.name} className="font-bold">
-                Nome Completo
-              </FieldLabel>
-
-              <Input
-                {...field}
-                id={field.name}
-                aria-invalid={fieldState.invalid}
-                className="rounded-3xl border-neuro-light-purple focus-visible:border-neuro-dark-purple focus-visible:ring-neuro-dark-purple mr-32"
-              />
-
-              {errors.name && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.name.message}
-                </p>
-              )}
-            </Field>
-          )}
+    return (
+      <main className="flex flex-col items-center justify-center min-h-screen font-rubik">
+        <img
+          src={NeuroFocusIcon}
+          alt="neuro focus icon"
+          className="w-[20rem] h-auto rounded-4xl scale-175"
         />
 
-        <Controller
-          name="email"
-          control={control}
-          render={({ field, fieldState }) => (
-            <Field
-              orientation="vertical"
-              data-invalid={fieldState.invalid}
-              className="gap-1 mt-3"
-            >
-              <FieldLabel htmlFor={field.name} className="font-bold">
-                Email
-              </FieldLabel>
+        <h1 className="text-center text-4xl font-bold mb-6">Seja Bem-vindo</h1>
 
-              <Input
-                {...field}
-                id={field.name}
-                aria-invalid={fieldState.invalid}
-                className="rounded-3xl border-neuro-light-purple focus-visible:border-neuro-dark-purple focus-visible:ring-neuro-dark-purple mr-32"
-              />
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8">
+          <Controller
+            name="name"
+            control={control}
+            render={({ field, fieldState }) => (
+              <Field
+                orientation="vertical"
+                data-invalid={fieldState.invalid}
+                className="gap-1 mt-3"
+              >
+                <FieldLabel htmlFor={field.name} className="font-bold">
+                  Nome Completo
+                </FieldLabel>
 
-              {errors.email && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.email.message}
-                </p>
-              )}
-            </Field>
-          )}
-        />
+                <Input
+                  {...field}
+                  id={field.name}
+                  aria-invalid={fieldState.invalid}
+                  className="rounded-3xl border-neuro-light-purple focus-visible:border-neuro-dark-purple focus-visible:ring-neuro-dark-purple mr-32"
+                />
 
-        <Controller
-          name="password"
-          control={control}
-          render={({ field, fieldState }) => (
-            <Field
-              orientation="vertical"
-              data-invalid={fieldState.invalid}
-              className="gap-1 mt-3"
-            >
-              <InputPassword
-                {...field}
-                id={field.name}
-                aria-invalid={fieldState.invalid}
-                className="border-neuro-purple focus-visible:border-neuro-dark-purple focus-visible:ring-neuro-dark-purple"
-              />
+                {errors.name && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.name.message}
+                  </p>
+                )}
+              </Field>
+            )}
+          />
 
-              {errors.password && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.password.message}
-                </p>
-              )}
-            </Field>
-          )}
-        />
+          <Controller
+            name="email"
+            control={control}
+            render={({ field, fieldState }) => (
+              <Field
+                orientation="vertical"
+                data-invalid={fieldState.invalid}
+                className="gap-1 mt-3"
+              >
+                <FieldLabel htmlFor={field.name} className="font-bold">
+                  Email
+                </FieldLabel>
 
-        <Button
-          type="submit"
-          variant="outline"
-          className="mt-8 bg-neuro-light-purple hover:bg-neuro-purple border-none px-12 rounded-3xl mb-4 cursor-pointer"
-        >
-          Criar Conta
-        </Button>
-      </form>
-    </main>
-  );
-}
+                <Input
+                  {...field}
+                  id={field.name}
+                  aria-invalid={fieldState.invalid}
+                  className="rounded-3xl border-neuro-light-purple focus-visible:border-neuro-dark-purple focus-visible:ring-neuro-dark-purple mr-32"
+                />
+
+                {errors.email && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.email.message}
+                  </p>
+                )}
+              </Field>
+            )}
+          />
+
+          <Controller
+            name="password"
+            control={control}
+            render={({ field, fieldState }) => (
+              <Field
+                orientation="vertical"
+                data-invalid={fieldState.invalid}
+                className="gap-1 mt-3"
+              >
+                <InputPassword
+                  {...field}
+                  id={field.name}
+                  aria-invalid={fieldState.invalid}
+                  className="border-neuro-purple focus-visible:border-neuro-dark-purple focus-visible:ring-neuro-dark-purple"
+                />
+
+                {errors.password && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.password.message}
+                  </p>
+                )}
+              </Field>
+            )}
+          />
+
+          <Button
+            type="submit"
+            variant="outline"
+            className="mt-8 bg-neuro-light-purple hover:bg-neuro-purple border-none px-12 rounded-3xl mb-4 cursor-pointer"
+          >
+            Criar Conta
+          </Button>
+        </form>
+      </main>
+    );
+  }
