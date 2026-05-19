@@ -36,7 +36,7 @@ function App() {
             title="Gerencie Tarefas"
             icon={<ClipboardList />}
             subtitle="Organize suas atividades escolares"
-            to=""
+            to="/page/gerenciartarefaPage"
             buttontitle="Ver Tarefas >"
             className="bg-neuro-light-green"
             buttonClassName="bg-neuro-dark-green"
