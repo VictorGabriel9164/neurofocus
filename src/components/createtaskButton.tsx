@@ -19,10 +19,6 @@ import { Textarea } from "@/components/ui/textarea";
 
 type CreateTaskButtonProps = {
   className?: string;
-  title?: string;
-  subjects?: string;
-  time?: string;
-  state?: boolean;
 };
 
 const CreateTaskButton = ({ className }: CreateTaskButtonProps) => {
