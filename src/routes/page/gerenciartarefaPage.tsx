@@ -16,6 +16,7 @@ type Task = {
   description: string;
   date: string;
   time: string;
+  state: "PENDENTE" | "CONCLUÍDA";
 };
 
 function RouteComponent() {
@@ -59,18 +60,11 @@ function RouteComponent() {
                 description={task.description}
                 date={task.date}
                 time={task.time}
+                state={task.state}
               />
             ))
           ) : (
-            <div
-              className="
-                w-full
-                bg-gray-100
-                rounded-2xl
-                p-6
-                text-center
-                text-gray-700
-              "
+            <div className="w-full bg-gray-100 rounded-2xl p-6 text-center text-gray-700"
             >
               Nenhuma atividade criada ainda.
             </div>

@@ -24,6 +24,7 @@ type Task = {
   description: string;
   date: string;
   time: string;
+  state: "PENDENTE" | "CONCLUÍDA";
 };
 
 type CreateTaskButtonProps = {
@@ -41,11 +42,12 @@ const CreateTaskButton = ({
   const [taskTime, setTaskTime] = useState("");
 
   const handleCreateTask = () => {
-    const newTask = {
+    const newTask: Task = {
       title: taskTitle,
       description: taskDescription,
       date: taskDate,
       time: taskTime,
+      state: "PENDENTE",
     };
 
     onCreateTask(newTask);
@@ -76,9 +78,7 @@ const CreateTaskButton = ({
 
         <AlertDialogContent className="sm:max-w-125 bg-gray-100">
           <AlertDialogHeader>
-            <AlertDialogTitle>
-              Nova atividade
-            </AlertDialogTitle>
+            <AlertDialogTitle>Nova atividade</AlertDialogTitle>
 
             <AlertDialogDescription>
               Defina as informações da atividade abaixo.
@@ -95,9 +95,7 @@ const CreateTaskButton = ({
             <Textarea
               placeholder="Descrição"
               value={taskDescription}
-              onChange={(e) =>
-                setTaskDescription(e.target.value)
-              }
+              onChange={(e) => setTaskDescription(e.target.value)}
             />
 
             <div className="grid grid-cols-2 gap-4">
@@ -116,9 +114,7 @@ const CreateTaskButton = ({
           </div>
 
           <AlertDialogFooter>
-            <AlertDialogCancel>
-              Cancelar
-            </AlertDialogCancel>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
 
             <AlertDialogAction onClick={handleCreateTask}>
               Salvar atividade
