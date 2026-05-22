@@ -1,5 +1,3 @@
-// CreateTaskButton -----------------------------
-
 import { useState } from "react";
 import { cn } from "#/lib/utils";
 
@@ -20,6 +18,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
 type Task = {
+  id: number;
   title: string;
   description: string;
   date: string;
@@ -43,15 +42,14 @@ const CreateTaskButton = ({
 
   const handleCreateTask = () => {
     const newTask: Task = {
-      title: taskTitle,
-      description: taskDescription,
-      date: taskDate,
-      time: taskTime,
-      state: "PENDENTE",
-    };
-
+  id: Date.now(),
+  title: taskTitle,
+  description: taskDescription,
+  date: taskDate,
+  time: taskTime,
+  state: "PENDENTE",
+};
     onCreateTask(newTask);
-
     setTaskTitle("");
     setTaskDescription("");
     setTaskDate("");
@@ -114,9 +112,9 @@ const CreateTaskButton = ({
           </div>
 
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogCancel className="cursor-pointer">Cancelar</AlertDialogCancel>
 
-            <AlertDialogAction onClick={handleCreateTask}>
+            <AlertDialogAction onClick={handleCreateTask} className="cursor-pointer">
               Salvar atividade
             </AlertDialogAction>
           </AlertDialogFooter>

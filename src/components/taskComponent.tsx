@@ -1,6 +1,5 @@
 import { cn } from "#/lib/utils";
-import { Button } from "@/components/ui/button";
-
+import ConfirmDialogComp from "#/components/confirmdialogComponent";
 type TaskComponentProps = {
   className?: string;
   title: string;
@@ -8,6 +7,7 @@ type TaskComponentProps = {
   date: string;
   time: string;
   state: "PENDENTE" | "CONCLUÍDA";
+  onComplete: () => void;
 };
 
 const TaskComponent = ({
@@ -17,6 +17,7 @@ const TaskComponent = ({
   date,
   time,
   state,
+  onComplete,
 }: TaskComponentProps) => {
   return (
     <div
@@ -56,9 +57,7 @@ const TaskComponent = ({
         </div>
 
         {state === "PENDENTE" && (
-          <Button className="bg-green-500 hover:bg-green-600 text-white rounded-xl cursor-pointer">
-            CONCLUIR
-          </Button>
+          <ConfirmDialogComp onConfirm={onComplete}/>
         )}
       </div>
     </div>
