@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Button } from "#/components/ui/button";
 import { ClipboardList } from "lucide-react";
 import { TrendingUp } from 'lucide-react'; 
+import { Link } from "@tanstack/react-router";
 import pomodoroTimer from "#/assets/icons/pomodorotimer.png";
 import SubpageComponent from "#/components/subpageHomecomponent";
 import Navbar from "#/components/neuroNavbar";
@@ -22,12 +23,14 @@ function App() {
           </div>
           <h1 className="m-8 mb-0 text-5xl font-semibold">Olá!</h1>
           <h1 className="m-8 mt-2 text-2xl">Suas tarefas estão aqui:</h1>
-          <Button
-            variant={"outline"}
-            className="ml-14 mr-18 bg-neuro-light-green hover:bg-neuro-dark-green border-none px-14 rounded-3xl text-white"
+          <Link
+          to="/page/gerenciartarefaPage"
           >
-            Adicionar Tarefa
-          </Button>
+          <Button variant={"outline"}
+            className="ml-14 mr-18 bg-neuro-light-green hover:bg-neuro-dark-green border-none px-14 rounded-3xl text-white">
+              Adicionar Tarefa
+            </Button>
+          </Link>
         </div>
 
         <div className="flex items-center justify-between mt-16 gap-16">
