@@ -50,7 +50,7 @@ function App() {
             title="Progresso"
             icon={<TrendingUp />}
             subtitle="Veja aqui seu desempenho semanal"
-            to=""
+            to="/page/progressPage"
             buttontitle="Ver Progresso >"
             className="bg-neuro-light-purple"
             buttonClassName="bg-neuro-dark-purple"
