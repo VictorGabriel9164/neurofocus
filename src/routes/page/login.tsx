@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useForm, Controller } from "react-hook-form";
 import type { SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,10 +18,13 @@ export const Route = createFileRoute("/page/login")({
 type FormData = z.infer<typeof loginSchema>;
 
 function RouteComponent() {
+  const navigate = useNavigate();
+
   const {
     handleSubmit,
     control,
-    formState: { errors },
+    setError,
+    formState: { errors, isSubmitting },
   } = useForm<FormData>({
     defaultValues: {
       email: "",
@@ -30,9 +33,33 @@ function RouteComponent() {
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
-    console.log(data);
-    console.log("Login realizado com sucesso.");
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    try {
+      const response = await fetch("http://localhost:3002/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: data.email,
+          password: data.password,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        setError("root", { message: result.error || "E-mail ou senha incorretos." });
+        return;
+      }
+
+      localStorage.setItem("token", result.token);
+      navigate({ to: "/page/home" });
+
+    } catch (error) {
+      console.error(error);
+      setError("root", { message: "Erro ao conectar com o servidor." });
+    }
   };
 
   return (
@@ -100,12 +127,19 @@ function RouteComponent() {
           )}
         />
 
+        {errors.root && (
+          <p className="text-red-500 text-sm text-center font-bold">
+            {errors.root.message}
+          </p>
+        )}
+
         <Button
           type="submit"
           variant="outline"
-          className="mt-8 bg-neuro-light-green hover:bg-neuro-dark-green border-none px-12 rounded-3xl mb-4 cursor-pointer"
+          disabled={isSubmitting}
+          className="mt-8 bg-neuro-light-green hover:bg-neuro-dark-green border-none px-12 rounded-3xl mb-4 cursor-pointer disabled:opacity-50"
         >
-          Entrar
+          {isSubmitting ? "Entrando..." : "Entrar"}
         </Button>
       </form>
 

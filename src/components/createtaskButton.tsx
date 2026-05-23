@@ -23,12 +23,12 @@ type Task = {
   description: string;
   date: string;
   time: string;
-  state: "PENDENTE" | "CONCLUÍDA";
+  state: "PENDENTE" | "CONCLUIDA";
 };
 
 type CreateTaskButtonProps = {
   className?: string;
-  onCreateTask: (task: Task) => void;
+  onCreateTask: (task: Omit<Task, "id" | "state">) => void;
 };
 
 const CreateTaskButton = ({
@@ -41,15 +41,15 @@ const CreateTaskButton = ({
   const [taskTime, setTaskTime] = useState("");
 
   const handleCreateTask = () => {
-    const newTask: Task = {
-  id: Date.now(),
-  title: taskTitle,
-  description: taskDescription,
-  date: taskDate,
-  time: taskTime,
-  state: "PENDENTE",
-};
-    onCreateTask(newTask);
+    if (!taskTitle.trim()) return;
+
+    onCreateTask({
+      title: taskTitle,
+      description: taskDescription,
+      date: taskDate,
+      time: taskTime,
+    });
+
     setTaskTitle("");
     setTaskDescription("");
     setTaskDate("");

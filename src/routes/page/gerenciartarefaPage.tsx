@@ -1,5 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useState, useEffect } from "react";
 
 import CreateTaskButton from "#/components/createtaskButton";
 import TaskComponent from "#/components/taskComponent";
@@ -15,23 +15,114 @@ type Task = {
   description: string;
   date: string;
   time: string;
-  state: "PENDENTE" | "CONCLUÍDA";
+  state: "PENDENTE" | "CONCLUIDA";
 };
 
 function RouteComponent() {
+  const navigate = useNavigate();
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const handleAddTask = (newTask: Task) => {
-    setTasks((prev) => [...prev, newTask]);
+  // Busca as tarefas do usuário logado ao carregar a página
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      navigate({ to: "/page/login" });
+      return;
+    }
+
+    fetch("http://localhost:3002/api/tasks", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        if (res.status === 401) {
+          throw new Error("UNAUTHORIZED"); // Erro de permissão
+        }
+        if (!res.ok) {
+          throw new Error("Erro no servidor do backend"); // Outros erros (500, etc)
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setTasks(data.tasks);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Erro detectado na tela de tarefas:", error);
+        
+        // SÓ apaga o token e desloga se o problema for a falta de autorização (401)
+        if (error.message === "UNAUTHORIZED") {
+          localStorage.removeItem("token");
+          navigate({ to: "/page/login" });
+        } else {
+          // Se for outro erro (ex: backend caiu), apenas para de carregar e mantém na página
+          setLoading(false);
+        }
+      });
+  }, [navigate]);
+
+  // Envia a nova tarefa para o backend
+  const handleAddTask = async (newTaskData: Omit<Task, "id" | "state">) => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    try {
+      const response = await fetch("http://localhost:3002/api/tasks", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(newTaskData),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        // Adiciona a tarefa recém-criada (com o ID gerado pelo banco) no topo da lista
+        setTasks((prev) => [data.task, ...prev]);
+      }
+    } catch (error) {
+      console.error("Erro ao criar tarefa:", error);
+    }
   };
 
-  const handleCompleteTask = (taskId: number) => {
-    setTasks((prev) =>
-      prev.map((task) =>
-        task.id === taskId ? { ...task, state: "CONCLUÍDA" } : task,
-      ),
+  // Marca a tarefa como concluída no backend
+  const handleCompleteTask = async (taskId: number) => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    try {
+      const response = await fetch(`http://localhost:3002/api/tasks/${taskId}/concluir`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ concluida: true }),
+      });
+
+      if (response.ok) {
+        setTasks((prev) =>
+          prev.map((task) =>
+            task.id === taskId ? { ...task, state: "CONCLUIDA" } : task
+          )
+        );
+      }
+    } catch (error) {
+      console.error("Erro ao concluir tarefa:", error);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex h-screen items-center justify-center font-rubik text-gray-500">
+        <p>Carregando suas tarefas...</p>
+      </div>
     );
-  };
+  }
 
   return (
     <>
@@ -39,7 +130,7 @@ function RouteComponent() {
         <Navbar />
       </header>
 
-      <main className="flex items-center flex-col font-rubik">
+      <main className="flex items-center flex-col font-rubik mb-20">
         <div className="bg-neuro-orange mt-8 w-325 h-70 rounded-2xl flex items-start justify-start flex-col gap-3">
           <h1 className="m-8 mb-0 text-5xl font-semibold">Minhas Tarefas:</h1>
 

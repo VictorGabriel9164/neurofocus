@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as IndexRouteImport } from './routes/index'
 import { Route as PageProgressPageRouteImport } from './routes/page/progressPage'
 import { Route as PagePomodoroPageRouteImport } from './routes/page/pomodoroPage'
 import { Route as PageLoginRouteImport } from './routes/page/login'
@@ -16,6 +17,11 @@ import { Route as PageHomeRouteImport } from './routes/page/home'
 import { Route as PageGerenciartarefaPageRouteImport } from './routes/page/gerenciartarefaPage'
 import { Route as PageCriarContaRouteImport } from './routes/page/criarConta'
 
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PageProgressPageRoute = PageProgressPageRouteImport.update({
   id: '/page/progressPage',
   path: '/page/progressPage',
@@ -48,6 +54,7 @@ const PageCriarContaRoute = PageCriarContaRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
   '/page/criarConta': typeof PageCriarContaRoute
   '/page/gerenciartarefaPage': typeof PageGerenciartarefaPageRoute
   '/page/home': typeof PageHomeRoute
@@ -56,6 +63,7 @@ export interface FileRoutesByFullPath {
   '/page/progressPage': typeof PageProgressPageRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof IndexRoute
   '/page/criarConta': typeof PageCriarContaRoute
   '/page/gerenciartarefaPage': typeof PageGerenciartarefaPageRoute
   '/page/home': typeof PageHomeRoute
@@ -65,6 +73,7 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
   '/page/criarConta': typeof PageCriarContaRoute
   '/page/gerenciartarefaPage': typeof PageGerenciartarefaPageRoute
   '/page/home': typeof PageHomeRoute
@@ -75,6 +84,7 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/'
     | '/page/criarConta'
     | '/page/gerenciartarefaPage'
     | '/page/home'
@@ -83,6 +93,7 @@ export interface FileRouteTypes {
     | '/page/progressPage'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/'
     | '/page/criarConta'
     | '/page/gerenciartarefaPage'
     | '/page/home'
@@ -91,6 +102,7 @@ export interface FileRouteTypes {
     | '/page/progressPage'
   id:
     | '__root__'
+    | '/'
     | '/page/criarConta'
     | '/page/gerenciartarefaPage'
     | '/page/home'
@@ -100,6 +112,7 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
   PageCriarContaRoute: typeof PageCriarContaRoute
   PageGerenciartarefaPageRoute: typeof PageGerenciartarefaPageRoute
   PageHomeRoute: typeof PageHomeRoute
@@ -110,6 +123,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/page/progressPage': {
       id: '/page/progressPage'
       path: '/page/progressPage'
@@ -156,6 +176,7 @@ declare module '@tanstack/react-router' {
 }
 
 const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
   PageCriarContaRoute: PageCriarContaRoute,
   PageGerenciartarefaPageRoute: PageGerenciartarefaPageRoute,
   PageHomeRoute: PageHomeRoute,

@@ -6,7 +6,7 @@ type Task = {
   description: string;
   date: string;
   time: string;
-  state: "PENDENTE" | "CONCLUÍDA";
+  state: "PENDENTE" | "CONCLUIDA";
 };
 
 type ProgressComponentProps = {
@@ -23,7 +23,7 @@ const ProgressComponent = ({
 
   // concluídas
   const completedTasks = tasks.filter(
-    (task) => task.state === "CONCLUÍDA"
+    (task) => task.state === "CONCLUIDA"
   ).length;
 
   // pendentes
@@ -48,7 +48,6 @@ const ProgressComponent = ({
         Resumo geral
       </h1>
 
-      {/* ALTERADO: Adicionado gap-16 para garantir um espaçamento maior entre os blocos */}
       <div className="flex items-center justify-between gap-16">
         <div className="flex flex-col gap-4">
           {/* concluídas */}

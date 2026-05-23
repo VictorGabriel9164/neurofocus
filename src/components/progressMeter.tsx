@@ -6,7 +6,7 @@ type Task = {
   description: string;
   date: string;
   time: string;
-  state: "PENDENTE" | "CONCLUÍDA";
+  state: "PENDENTE" | "CONCLUIDA";
 };
 
 type ProgressMeterProps = {
@@ -20,7 +20,7 @@ const ProgressMeter = ({
 }: ProgressMeterProps) => {
   const totalTasks = tasks.length;
   const completedTasks = tasks.filter(
-    (task) => task.state === "CONCLUÍDA"
+    (task) => task.state === "CONCLUIDA"
   ).length;
 
   const progress = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
@@ -53,7 +53,7 @@ const ProgressMeter = ({
     if (percentage < 100) {
       return {
         label: "Bom desempenho!",
-        subLabel: "Falta muito pouco para gabaritar o dia!",
+        subLabel: "Falta muito pouco para gabaritar suas tarefas!",
         colorClass: "text-blue-700 bg-blue-200",
         borderColor: "border-blue-300",
       };
