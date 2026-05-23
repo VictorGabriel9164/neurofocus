@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgresql://neondb_owner:npg_blQpeMSn3O8E@ep-spring-pine-aptv0bad-pooler.c-7.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
 }
 
 model User {
@@ -20,11 +20,10 @@ model User {
 model Task {
   id          Int        @id @default(autoincrement())
   title       String
-  subject     String
   description String?
-  dueDate     DateTime
-  status      TaskStatus @default(PENDENTE)
-  completedAt DateTime?
+  date        String?
+  time        String?
+  state       TaskStatus @default(PENDENTE)
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   userId      Int
@@ -34,5 +33,4 @@ model Task {
 enum TaskStatus {
   PENDENTE
   CONCLUIDA
-  ATRASADA
 }

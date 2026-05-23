@@ -2,12 +2,10 @@ import { Router } from 'express'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import prisma from '../prisma.js'
-import { authMiddleware } from '../middleware/auth.js'
 
 const router = Router()
+const JWT_SECRET = process.env.JWT_SECRET || "neurofocus_segredo_super_seguro_123"
 
-// ── POST /api/auth/registrar ──────────────────────────────────────────────────
-// Body: { name, email, password }
 router.post('/registrar', async (req, res) => {
   const { name, email, password } = req.body
 
@@ -33,7 +31,7 @@ router.post('/registrar', async (req, res) => {
 
     const token = jwt.sign(
       { userId: user.id, name: user.name },
-      process.env.JWT_SECRET,
+      JWT_SECRET,
       { expiresIn: '7d' }
     )
 
@@ -44,8 +42,6 @@ router.post('/registrar', async (req, res) => {
   }
 })
 
-// ── POST /api/auth/login ──────────────────────────────────────────────────────
-// Body: { email, password }
 router.post('/login', async (req, res) => {
   const { email, password } = req.body
 
@@ -66,7 +62,7 @@ router.post('/login', async (req, res) => {
 
     const token = jwt.sign(
       { userId: user.id, name: user.name },
-      process.env.JWT_SECRET,
+      JWT_SECRET,
       { expiresIn: '7d' }
     )
 
@@ -81,16 +77,31 @@ router.post('/login', async (req, res) => {
   }
 })
 
-// ── GET /api/auth/me  (rota protegida) ───────────────────────────────────────
-// Retorna os dados do usuário autenticado
-router.get('/me', authMiddleware, async (req, res) => {
+router.get('/me', async (req, res) => {
   try {
-    const user = await prisma.user.findUnique({
-      where: { id: req.userId },
-      select: { id: true, name: true, email: true, createdAt: true },
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1]
+
+    if (!token) {
+      return res.status(401).json({ error: 'Token não fornecido.' })
+    }
+
+    jwt.verify(token, JWT_SECRET, async (err, decoded) => {
+      if (err) {
+        return res.status(401).json({ error: 'Token inválido ou expirado.' })
+      }
+
+      const user = await prisma.user.findUnique({
+        where: { id: decoded.userId },
+        select: { id: true, name: true, email: true, createdAt: true },
+      })
+
+      if (!user) {
+        return res.status(404).json({ error: 'Usuário não encontrado.' })
+      }
+
+      return res.json({ user })
     })
-    if (!user) return res.status(404).json({ error: 'Usuário não encontrado.' })
-    res.json({ user })
   } catch (err) {
     console.error(err)
     res.status(500).json({ error: 'Erro ao buscar usuário.' })

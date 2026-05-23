@@ -7,7 +7,7 @@ import taskRoutes from './routes/tasks.js'
 import progressRoutes from './routes/progress.js'
 
 const app = express()
-const PORT = process.env.PORT || 3001
+const PORT = 3002
 
 // ── Middlewares ────────────────────────────────────────────────────────────────
 app.use(cors({
